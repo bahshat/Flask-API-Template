@@ -1,5 +1,4 @@
 import psycopg2
-from db_queries import *
 from datetime import datetime
 
 def db_connection():
@@ -20,15 +19,6 @@ def selectTableRows(query):
     cur = conn.cursor()
     cur.execute(query)
     rows = cur.fetchall()
-    cur.close()
-    conn.close()
-    return rows
-
-def selectTableRow(query):
-    conn = db_connection()
-    cur = conn.cursor()
-    cur.execute(query)
-    rows = cur.fetchone()
     cur.close()
     conn.close()
     return rows

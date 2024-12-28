@@ -49,3 +49,19 @@ def build_update_query(table_name, data, id):
     final_set = final_set[:-1]
     final_query = final_query.replace("#set", final_set)
     return final_query
+
+# ==============================================================================
+# Public functions
+def build_query(query_type, table_name, data, id):
+    
+    if query_type == "select":
+        return build_select_query(table_name, id)
+    
+    if query_type == "delete":
+        return build_delete_query(table_name, id)
+
+    if query_type == "insert":
+        return build_insert_query(table_name, data.keys(), data.values())
+
+    if query_type == "update":
+        return build_update_query(table_name, data, id)

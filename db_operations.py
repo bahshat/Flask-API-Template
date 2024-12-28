@@ -1,14 +1,19 @@
+import json
 import psycopg2
 from datetime import datetime
 
+with open('database_connection.json') as f:
+    conn_params = json.load(f)
+    
+# ________________________________________________________________________________
 def db_connection():
     try:
         connection = psycopg2.connect(
-            dbname="defaultdb",
-            user="avnadmin",
+            dbname= conn_params['MaintenanceDB'],
+            user= conn_params['Username'],
             password="AVNS_jj25SnhUAlU7PzpfngP",
-            host="pg-1707b0b5-learning-tracker.b.aivencloud.com",  
-            port="23944"
+            host= conn_params['Host'],  
+            port= conn_params['Port']
         )
     except Exception as e:
         print(f"Error in database connection: {e}")

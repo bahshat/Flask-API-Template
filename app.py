@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route('/table/<string:table_name>', methods = ["GET"])
 def getData(table_name):
     id = request.args.get('id')
-    query = build_select_query(table_name, id)
+    query = build_query("select", table_name, {}, id)
     result = selectTableRows(query)
     return (jsonify(result))
 
@@ -17,7 +17,7 @@ def getData(table_name):
 @app.route('/table/<string:table_name>', methods = ["DELETE"])
 def deleteData(table_name):
     id = request.args.get('id')
-    query = build_delete_query(table_name, id)
+    query = build_query("delete", table_name, {}, id)
     result = insertUpdateDeleteRow(query, id)
     return (jsonify(result))
 
@@ -26,15 +26,9 @@ def deleteData(table_name):
 def insertData(table_name):
     body = request.get_json()
     
-    column_names = []
-    values = []
+    query = build_query("insert", table_name, body, None)
 
-    for key, value in body.items():
-        column_names.append(key)
-        values.append(value)
-
-    query = build_insert_query(table_name, column_names, values)
-    result = insertUpdateDeleteRow(query, *values)
+    result = insertUpdateDeleteRow(query)
 
     return (jsonify(result))
 
@@ -43,7 +37,7 @@ def insertData(table_name):
 def updateData(table_name):
     id = request.args.get('id')
     body = request.get_json()
-    query = build_update_query(table_name, body, id)
+    query = build_query("update", table_name, body, id)
     result = insertUpdateDeleteRow(query)
     return (jsonify(result))
 

@@ -1,0 +1,7 @@
+{
+    "Host": "pg-1707b0b5-learning-tracker.b.aivencloud.com",
+    "Port": 23944,
+    "MaintenanceDB": "defaultdb",
+    "Username": "avnadmin",
+    "SSLMode": "requirea"
+}

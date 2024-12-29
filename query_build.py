@@ -2,7 +2,7 @@ SELECT_ROWS = "SELECT * FROM #table_name"
 DELETE_ROWS = "DELETE FROM #table_name"
 INSERT_ROW = "INSERT INTO #table_name (#column_names) VALUES (#values);"
 UPDATE_ROW = "UPDATE #table_name SET #set"
-WHERE_CLOUSE = " WHERE id = #id;"
+WHERE_CLOUSE = " WHERE id IN (#ids);"
 
 # ==============================================================================
 
@@ -17,27 +17,27 @@ def build_insert_query(table_name, column_names, values):
 
     return final_query
 
-def build_select_query(table_name, id):
+def build_select_query(table_name, ids):
     final_query = SELECT_ROWS.replace("#table_name", table_name)
 
-    if id:
-        where_clouse = WHERE_CLOUSE.replace("#id", id)
+    if ids: 
+        where_clouse = WHERE_CLOUSE.replace("#ids", ids)
         final_query = final_query + where_clouse
     
     return final_query
 
-def build_delete_query(table_name, id):
+def build_delete_query(table_name, ids):
     final_query = DELETE_ROWS.replace("#table_name", table_name)
 
-    if id:
-        where_clouse = WHERE_CLOUSE.replace("#id", id)
+    if ids:
+        where_clouse = WHERE_CLOUSE.replace("#ids", ids)
         final_query = final_query + where_clouse
     
     return final_query
 
-def build_update_query(table_name, data, id):
+def build_update_query(table_name, data, ids):
     final_query = UPDATE_ROW.replace("#table_name", table_name)
-    where_clouse = WHERE_CLOUSE.replace("#id", id)
+    where_clouse = WHERE_CLOUSE.replace("#ids", ids)
     final_query = final_query + where_clouse
     
     final_set = ""
@@ -52,16 +52,22 @@ def build_update_query(table_name, data, id):
 
 # ==============================================================================
 # Public functions
-def build_query(query_type, table_name, data, id):
+def build_query(query_type, table_name, data, ids):
     
     if query_type == "select":
-        return build_select_query(table_name, id)
+        return build_select_query(table_name, ids)
     
     if query_type == "delete":
-        return build_delete_query(table_name, id)
+        return build_delete_query(table_name, ids)
 
     if query_type == "insert":
         return build_insert_query(table_name, data.keys(), data.values())
 
     if query_type == "update":
-        return build_update_query(table_name, data, id)
+        return build_update_query(table_name, data, ids)
+    
+def build_select_some_query():
+    
+    query = "SELECT * FROM customer WHERE id IN (1, 2, 3);"
+
+    return query

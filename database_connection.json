@@ -3,5 +3,6 @@
     "Port": 23944,
     "MaintenanceDB": "defaultdb",
     "Username": "avnadmin",
-    "SSLMode": "requirea"
+    "SSLMode": "requirea",
+    "Password" :"AVNS_jj25SnhUAlU7PzpfngP"
 }

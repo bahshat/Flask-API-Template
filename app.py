@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request
 from db_operations import *
-from query_build import *
-app = Flask(__name__)
+from query_build import build_query
 
+app = Flask(__name__)
 
 #________________________________ HTTP methods _______________________________________
 
